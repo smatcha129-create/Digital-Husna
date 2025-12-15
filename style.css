@@ -1,0 +1,338 @@
+/* ----------------------------------
+ * 1. BASE SETUP & ACCESSIBLE FONTS
+ * ---------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600;700&display=swap');
+
+:root {
+    /* Accessible Coquette Palette (High Contrast Pink/White/Black) */
+    --color-white: #FFFFFF;
+    --color-cream: #FDF4F5;    /* Soft Background (Latar Belakang Laman) */
+    --color-pink-dust: #EAD0D9; /* Muted Rose Pink (Latar Belakang Sub-kotak) */
+    --color-pink-ribbon: #FF7FA7; /* Brighter Pink (Aksen Utama) */
+    --color-cherry: #B00020;    /* Deep Cherry Red (Aksen Tegas & Teks Tajuk) */
+    --color-black: #000000;      /* Full Black for Readability */
+
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    --spacing-pad: 25px;
+    --border-radius: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--color-black);
+    line-height: 1.6;
+
+    background-color: var(--color-cream);
+    padding-top: 70px;
+
+    /* CORAK RIBEN Latar Belakang Laman */
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        var(--color-pink-dust) 5px,
+        var(--color-pink-dust) 6px
+    );
+    background-size: 50px 50px;
+    opacity: 0.98;
+}
+
+/* Links */
+a {
+    color: var(--color-cherry);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+a:hover {
+    color: var(--color-pink-ribbon);
+}
+
+
+/* ----------------------------------
+ * 2. NAVBAR (The Header)
+ * ---------------------------------- */
+.navbar {
+    background-color: var(--color-white);
+    padding: 10px var(--spacing-pad);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid var(--color-pink-ribbon);
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-cherry);
+    letter-spacing: 1px;
+}
+
+.navbar nav a {
+    color: var(--color-black);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    border-bottom: none;
+}
+
+.navbar nav a:hover {
+    color: var(--color-white);
+    background-color: var(--color-pink-ribbon);
+}
+
+/* ----------------------------------
+ * 3. HERO (The Introduction) - GAYA SURAT KHABAR/CUTOUT
+ * ---------------------------------- */
+.hero {
+    background: var(--color-white); /* Kotak Hero Putih */
+    padding: 50px 30px;
+    text-align: center;
+    margin: 25px auto;
+    max-width: 1000px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 3px dashed var(--color-pink-ribbon); /* Border putus-putus untuk kesan vintage */
+}
+
+.hero h2 {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-black);
+    margin-bottom: 5px;
+}
+
+.hero .script-accent {
+    /* CORAK SURAT KHABAR */
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 4rem;
+    color: var(--color-cherry);
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 1;
+
+    /* Mesti ada imej bernama 'newspaper-texture.jpg' */
+    background-image: url('newspaper-texture.jpg'); 
+    background-size: cover;
+    background-position: center;
+
+    /* KUNCI UTAMA: Mix-Blend-Mode untuk kesan Keratan */
+    mix-blend-mode: multiply; 
+
+    text-shadow: 2px 2px 0 var(--color-pink-dust); /* Bayangan untuk kesan 3D */
+}
+
+/* ----------------------------------
+ * 4. STRUCTURED 2-COLUMN LAYOUT
+ * ---------------------------------- */
+.elite-grid-wrapper {
+    max-width: 1000px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+/* General Section Styling (Main Cards) */
+.section {
+    background-color: var(--color-white);
+    padding: var(--spacing-pad);
+    border: 1px solid var(--color-pink-ribbon);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+/* Section Titles */
+.section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: var(--color-cherry);
+    border-bottom: 3px solid var(--color-pink-ribbon);
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.section h3 {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--color-pink-ribbon);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ----------------------------------
+ * 5. IMAGE & CONTENT STYLES
+ * ---------------------------------- */
+
+/* BARU: Clearfix untuk mengatasi masalah float imej */
+.bio-content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.profile-photo {
+    width: 130px; height: 130px; border-radius: 50%;
+    margin: 10px 25px 15px 0; border: 4px solid var(--color-pink-ribbon); float: left;
+    object-fit: cover;
+}
+.location-photo {
+    width: 130px; height: auto; border-radius: var(--border-radius);
+    margin: 10px 25px 15px 0; border: 4px solid var(--color-pink-ribbon); float: left;
+}
+.school-logo {
+    max-width: 60px; border-radius: 50%;
+    border: 3px solid var(--color-cherry); margin-bottom: 10px;
+    height: 60px;
+    object-fit: contain;
+}
+.school-photo-extra {
+    max-width: 200px; border-radius: var(--border-radius);
+    border: 1px solid var(--color-pink-dust); margin-bottom: 10px;
+}
+
+/* List Item Styling (Custom Icons/Stickers) */
+
+.skills-list li, .other-activities-list li, .activity-details li, .school-entry li {
+    padding-top: 8px; padding-bottom: 8px; font-size: 0.95rem;
+    padding-left: 40px; position: relative; list-style: none; margin-left: 0; line-height: 1.4;
+}
+
+.bio-content ul {
+    list-style: disc; /* Kekalkan disc list untuk bio utama */
+    padding: 0;
+}
+.bio-content li {
+    padding-top: 8px; padding-bottom: 8px; font-size: 0.95rem; line-height: 1.4;
+    list-style: disc; margin-left: 20px; padding-left: 5px; position: relative;
+}
+
+/* Reset ::before/::after untuk disc lists */
+.bio-content li::before, .bio-content li::after { content: none !important; }
+
+/* --- STICKERS/ICONS FOR CUSTOM LISTS --- */
+.skills-list li::before,
+.activity-details li::before { content: '🎀'; font-size: 1em; position: absolute; left: 0; color: var(--color-pink-ribbon); }
+
+.other-activities-list li::before { content: '💖'; font-size: 1em; position: absolute; left: 0; color: var(--color-pink-ribbon); }
+
+.school-entry li::before { content: '⭐'; font-size: 1em; position: absolute; left: 0; color: var(--color-pink-ribbon); }
+/* ---------------------------------------- */
+
+/* Sub-Cards (Activity/Experience) - Muted Pink Dot Pattern */
+.activity-entry, .experience-entry {
+    padding: 18px;
+    margin-bottom: 25px;
+    border-left: 5px solid var(--color-pink-ribbon);
+
+    background-color: var(--color-pink-dust);
+    border-radius: var(--border-radius);
+
+    /* Subtle CSS Dot Pattern */
+    background-image: radial-gradient(var(--color-pink-dust) 15%, transparent 15%);
+    background-color: var(--color-pink-dust);
+    background-size: 10px 10px;
+    opacity: 0.95;
+}
+
+.role-duration, .duration {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: var(--color-black);
+}
+
+/* CONTACT SECTION (Kotak Pink Ribbon) */
+.contact-block {
+    padding: 30px;
+    border: 2px solid var(--color-cherry);
+    background-color: var(--color-pink-ribbon);
+    color: var(--color-black);
+    border-radius: var(--border-radius);
+    margin-bottom: 0;
+}
+.contact-block h2 {
+    color: var(--color-black);
+    border-bottom: 3px solid var(--color-cherry);
+}
+
+/* ----------------------------------
+ * 6. FOOTER STYLES
+ * ---------------------------------- */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-weight: 600;
+    margin-top: 30px;
+    border-top: 5px solid var(--color-pink-ribbon);
+}
+
+/* ----------------------------------
+ * 7. MOBILE RESPONSIVENESS
+ * ---------------------------------- */
+@media (max-width: 850px) {
+    .elite-grid-wrapper {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Fix for floating images on mobile */
+    .profile-photo, .location-photo {
+        float: none;
+        display: block;
+        margin: 15px auto 10px;
+    }
+
+    .school-entry {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 0;
+        border-left: none;
+    }
+
+    .school-entry li {
+        text-align: left;
+        padding-left: 20px;
+    }
+    .school-entry li::before {
+        left: -5px;
+    }
+
+    .school-logo {
+        display: block;
+        margin: 0 auto 10px;
+    }
+    .section {
+        margin-bottom: 15px;
+    }
+}
