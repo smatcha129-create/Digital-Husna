@@ -6,11 +6,12 @@
 :root {
     /* Accessible Coquette Palette (High Contrast Pink/White/Black) */
     --color-white: #FFFFFF;
-    --color-cream: #FDF4F5;    /* Soft Background (Latar Belakang Laman) */
-    --color-pink-dust: #EAD0D9; /* Muted Rose Pink (Latar Belakang Sub-kotak) */
-    --color-pink-ribbon: #FF7FA7; /* Brighter Pink (Aksen Utama) */
-    --color-cherry: #B00020;    /* Deep Cherry Red (Aksen Tegas & Teks Tajuk) */
+    --color-cream: #FDF4F5;       /* Soft Background (Latar Belakang Laman) */
+    --color-pink-dust: #EAD0D9; /* Muted Rose Pink (Latar Belakang Sub-kotak & Tabel Genap) */
+    --color-pink-ribbon: #FF7FA7; /* Brighter Pink (Aksen Utama & Header Tabel) */
+    --color-cherry: #B00020;    /* Deep Cherry Red (Aksen Tegas, Teks Tajuk, & Highlight Tabel) */
     --color-black: #000000;      /* Full Black for Readability */
+    --color-light-pink: #FEE7F0; /* Shade Pink Paling Terang untuk Latar Belakang Data Tabel Ganjil */
 
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
@@ -33,6 +34,10 @@ body {
 
     background-color: var(--color-cream);
     padding-top: 70px;
+    
+    /* Ensure body is relative for the absolute pseudo-elements */
+    position: relative;
+    overflow-x: hidden;
 
     /* CORAK RIBEN Latar Belakang Laman */
     background-image: repeating-linear-gradient(
@@ -57,6 +62,50 @@ a:hover {
     color: var(--color-pink-ribbon);
 }
 
+
+/* ----------------------------------
+ * 1.5. ORCHID FLOWER SIDE DECORATION (TOP LEFT & RIGHT - ADDED FOR VISUAL ACCENT)
+ * ---------------------------------- */
+
+/* Left Orchid Decoration */
+body::before {
+    content: '';
+    position: absolute;
+    top: 5%; 
+    left: 0; 
+    width: 150px; 
+    height: 300px; 
+    
+    /* NOTE: You need to place your 'orchid-flower.png' file in the same directory */
+    background-image: url('orchid-flower.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    opacity: 0.7; 
+    z-index: 5; 
+    
+    transform: none; 
+}
+
+/* Right Orchid Decoration */
+body::after {
+    content: '';
+    position: absolute;
+    top: 5%; 
+    right: 0; 
+    width: 150px; 
+    height: 300px; 
+    
+    /* NOTE: You need to place your 'orchid-flower.png' file in the same directory */
+    background-image: url('orchid-flower.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    opacity: 0.7;
+    z-index: 5; 
+
+    transform: scaleX(-1); 
+}
 
 /* ----------------------------------
  * 2. NAVBAR (The Header)
@@ -133,13 +182,13 @@ a:hover {
     padding: 0 10px;
     line-height: 1;
 
-    /* Mesti ada imej bernama 'newspaper-texture.jpg' */
-    background-image: url('newspaper-texture.jpg'); 
+    /* NOTE: You need to place your 'newspaper-texture.jpg' file in the same directory */
+    background-image: url('newspaper-texture.jpg');
     background-size: cover;
     background-position: center;
 
     /* KUNCI UTAMA: Mix-Blend-Mode untuk kesan Keratan */
-    mix-blend-mode: multiply; 
+    mix-blend-mode: multiply;
 
     text-shadow: 2px 2px 0 var(--color-pink-dust); /* Bayangan untuk kesan 3D */
 }
@@ -160,10 +209,20 @@ a:hover {
 .section {
     background-color: var(--color-white);
     padding: var(--spacing-pad);
-    border: 1px solid var(--color-pink-ribbon);
+    /* **UPDATED:** Border expanded to 3px to match the hot pink aesthetic */
+    border: 3px solid var(--color-pink-ribbon); 
     border-radius: var(--border-radius);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px; /* Jurang antara kotak dalam lajur yang sama */
+}
+
+/* Pastikan section dalam col-main dan col-sidebar menggunakan margin-bottom yang sama */
+.col-main .section, .col-sidebar .section {
     margin-bottom: 25px;
+}
+/* Alih keluar margin-bottom dari seksyen terakhir dalam setiap lajur */
+.col-main .section:last-child, .col-sidebar .section:last-child {
+    margin-bottom: 0;
 }
 
 /* Section Titles */
@@ -191,7 +250,7 @@ a:hover {
  * 5. IMAGE & CONTENT STYLES
  * ---------------------------------- */
 
-/* BARU: Clearfix untuk mengatasi masalah float imej */
+/* Clearfix untuk mengatasi masalah float imej */
 .bio-content::after {
     content: "";
     display: table;
@@ -269,22 +328,234 @@ a:hover {
     color: var(--color-black);
 }
 
+/* MEDIA COLLECTION STYLES */
+.media-item video, .media-item audio {
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid var(--color-pink-ribbon);
+    display: block;
+}
+.media-item p {
+    margin-top: 5px;
+}
+.media-item h3 {
+    margin-bottom: 5px;
+}
+
+/* FULL-WIDTH SECTIONS (GALLERY & CONTACT) */
+.section.contact-block, #gallery {
+    grid-column: 1 / -1; /* Rentangkan kontak melintasi semua kolom */
+    margin-top: 0;
+}
+
+/* GALLERY STYLES */
+.photo-grid-container {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 15px; 
+    margin-top: 20px;
+}
+.photo-grid-container img {
+    width: 100%;
+    max-width: none; 
+    margin: 0; 
+    height: auto; 
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    border: 3px solid var(--color-cherry);
+}
+
+
 /* CONTACT SECTION (Kotak Pink Ribbon) */
 .contact-block {
+    grid-column: 1 / -1; /* Rentangkan kontak melintasi semua kolom */
     padding: 30px;
     border: 2px solid var(--color-cherry);
     background-color: var(--color-pink-ribbon);
     color: var(--color-black);
     border-radius: var(--border-radius);
     margin-bottom: 0;
+    text-align: center;
 }
 .contact-block h2 {
     color: var(--color-black);
     border-bottom: 3px solid var(--color-cherry);
+    display: inline-block;
+}
+.contact-block a {
+    color: var(--color-black); /* Link hitam pada latar pink */
+    text-decoration: none;
+    border-bottom: 2px dotted var(--color-cherry);
+}
+.contact-block a:hover {
+    color: var(--color-white); /* Teks putih saat hover */
+    border-bottom: 2px solid var(--color-white);
 }
 
+
 /* ----------------------------------
- * 6. FOOTER STYLES
+ * 6. TABLE STYLES (Summary Table) - VERSI ALL PINK & HIGHLIGHTS
+ * ---------------------------------- */
+.summary-table-container {
+    margin-bottom: 30px;
+    background-color: var(--color-light-pink);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-pink-ribbon);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.summary-table-container h2 {
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    color: var(--color-cherry);
+    border-bottom: 2px solid var(--color-pink-ribbon);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    font-weight: 700;
+}
+
+.summary-table-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+/* Header Tabel */
+.summary-table-container th {
+    background-color: var(--color-pink-ribbon);
+    color: var(--color-white);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 10px 15px;
+    text-align: center;
+    border: none;
+}
+
+/* Data Baris Default (Ganjil) */
+.summary-table-container td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 0.95rem;
+    border: none;
+    background-color: var(--color-light-pink);
+    color: var(--color-black);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Baris Genap (SMK Wangsa Melawati) */
+.summary-table-container tbody tr:nth-child(even) td {
+    background-color: var(--color-pink-dust);
+}
+
+/* --- HIGHLIGHT BARIS KHUSUS --- */
+
+/* Highlight SK Wangsa Jaya (Baris 1) */
+.summary-table-container tbody tr:nth-child(1) td {
+    background-color: var(--color-cherry); /* Deep Cherry Red */
+    color: var(--color-white); /* Teks Putih */
+    font-weight: 600;
+}
+
+/* Highlight UiTM Segamat (Baris Terakhir/3) */
+.summary-table-container tbody tr:last-child td {
+    background-color: var(--color-cherry); /* Deep Cherry Red */
+    color: var(--color-white); /* Teks Putih */
+    font-weight: 600;
+}
+/* Pastikan hover tidak mengubah warna teks highlight menjadi hitam */
+.summary-table-container tbody tr:nth-child(1):hover td,
+.summary-table-container tbody tr:last-child:hover td {
+    background-color: var(--color-cherry); /* Pertahankan warna Cherry Red saat hover */
+    opacity: 0.9; /* Sedikit gelap saat hover */
+}
+
+/* Hover Effect pada baris normal (pink) */
+.summary-table-container tbody tr:not(:nth-child(1)):not(:last-child):hover td {
+    background-color: #ffdce5; /* Pink lebih cerah saat hover */
+    box-shadow: 0 0 5px rgba(255, 127, 167, 0.5);
+}
+
+/* Sudut Membulat pada header tabel */
+.summary-table-container tr:first-child th:first-child {
+    border-top-left-radius: var(--border-radius);
+}
+.summary-table-container tr:first-child th:last-child {
+    border-top-right-radius: var(--border-radius);
+}
+
+
+/* ----------------------------------
+ * 7. EDUCATION TIMELINE STYLES
+ * ---------------------------------- */
+.education-timeline h3 {
+    font-family: var(--font-heading);
+    color: var(--color-cherry);
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.education-timeline > p {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Base Timeline Line (Garis Pemandu) */
+.education-timeline {
+    border-left: 3px solid var(--color-pink-dust);
+    padding-left: 30px;
+    position: relative;
+}
+
+.school-entry {
+    margin-bottom: 30px;
+    position: relative;
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Titik Timeline (The Coquette Seal/Sticker) */
+.school-entry::before {
+    content: '💖';
+    position: absolute;
+    left: -48px;
+    top: 15px;
+    font-size: 1.5em;
+    background: var(--color-white);
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px var(--color-cream);
+}
+
+/* Style khusus untuk Universiti (UiTM) */
+.school-entry.university::before {
+    content: '🎓';
+    font-size: 1.5em;
+    color: var(--color-cherry);
+}
+
+.school-entry ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.school-entry li {
+    padding-left: 25px;
+}
+
+
+/* ----------------------------------
+ * 8. FOOTER STYLES
  * ---------------------------------- */
 footer {
     text-align: center;
@@ -296,12 +567,13 @@ footer {
     border-top: 5px solid var(--color-pink-ribbon);
 }
 
+
 /* ----------------------------------
- * 7. MOBILE RESPONSIVENESS
+ * 9. MOBILE RESPONSIVENESS
  * ---------------------------------- */
 @media (max-width: 850px) {
     .elite-grid-wrapper {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Kembali ke satu lajur */
         gap: 15px;
     }
 
@@ -312,6 +584,26 @@ footer {
         margin: 15px auto 10px;
     }
 
+    /* Navbar on mobile */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 15px;
+    }
+    .navbar nav {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    .navbar nav a {
+        margin: 5px 8px;
+        padding: 5px 8px;
+        font-size: 0.9rem;
+    }
+
+    /* Timeline on mobile */
     .school-entry {
         flex-direction: column;
         align-items: center;
@@ -327,12 +619,74 @@ footer {
     .school-entry li::before {
         left: -5px;
     }
+    .education-timeline {
+        padding-left: 25px;
+        border-left: 3px solid var(--color-pink-dust);
+    }
+    .school-entry::before {
+        left: -18px; /* Offset yang sesuai untuk mobile */
+        top: 10px;
+    }
 
     .school-logo {
         display: block;
         margin: 0 auto 10px;
     }
+
     .section {
         margin-bottom: 15px;
+    }
+
+    /* Memastikan col-main dan col-sidebar tidak menimbulkan masalah grid lama */
+    .col-main, .col-sidebar {
+        grid-column: 1 / -1;
+    }
+}
+
+/* ----------------------------------
+ * 10. SCRIPTING ELEMENT STYLES (NOTIFICATION)
+ * ---------------------------------- */
+.notification-banner {
+    position: fixed;
+    top: 70px; /* Below the fixed navbar */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    padding: 15px 25px;
+    
+    background-color: var(--color-pink-ribbon); /* Bright Pink Background */
+    color: var(--color-white); /* White Text */
+    
+    border: 2px solid var(--color-cherry); /* Cherry Red Border */
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+    cursor: pointer; /* Indicates it can be clicked away */
+    
+    z-index: 1001; /* Above the navbar (1000) */
+    
+    /* Initially hidden for the script to show it */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* State when the script makes it visible */
+.notification-banner.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile Adjustment: Make it full width */
+@media (max-width: 650px) {
+    .notification-banner {
+        width: 100%;
+        border-radius: 0;
+        top: 65px;
     }
 }
